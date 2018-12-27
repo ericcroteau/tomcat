@@ -1,0 +1,15 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Copy setenv to new Tomcat"
+      template:
+        src: "{{item.SRC}}"
+        dest: "{{item.DEST}}"
+        owner: "{{item.OWNER}}"
+        group: "{{item.GROUP}}"
+        mode: "{{item.MODE}}"
+      become: yes
+      become_user: "{{item.OWNER}}"
+      with_items:
+        - "{{var_setenv}}"

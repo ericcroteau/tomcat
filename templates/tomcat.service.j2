@@ -1,0 +1,14 @@
+[Unit]
+Description=Apache Tomcat/{{var_tomcat_version}} --> Instance: {{var_pool}}
+Requires=network.target
+After=syslog.target network.target
+[Service]
+Type=simple
+ExecStart={{var_poolbin_path}}/startup.sh
+ExecStop={{var_poolbin_path}}/shutdown.sh
+User={{var_user}}
+PIDFile={{var_pool_path}}/catalina.pid
+TimeoutSec=0
+[Install]
+WantedBy=multi-user.target
+

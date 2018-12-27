@@ -1,0 +1,4 @@
+Cmnd_Alias SU_CMNDS_{{var_su_group|upper}} = \
+        /bin/su - {{var_user|lower}}
+
+%{{var_su_group|lower}} ALL =(root) SU_CMNDS_{{var_su_group|upper}}

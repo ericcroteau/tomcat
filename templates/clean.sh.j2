@@ -1,0 +1,43 @@
+# This script is intended to cleanup installation should an issue occur.
+# It is mandatory that the related java process is down before execution.
+# Once completed, necessary entries in /etc/fstab should be removed
+# and "systemctl daemon-reload" performed
+
+systemctl stop tomcat-{{var_pool}}
+
+
+rm -Rf {{var_logs_path}}/*
+umount {{var_logs_path}}
+rm -Rf {{var_root_path}}/*
+umount {{var_root_path}}
+
+
+lvremove -f /dev/{{var_vg_name}}/{{var_logs_lvname}}
+lvremove -f /dev/{{var_vg_name}}/{{var_root_lvname}}
+vgremove -f /dev/{{var_vg_name}}
+
+#cleanup of users and group
+
+sed -i '/^{{var_user}}/d' /etc/passwd
+sed -i '/^{{var_group}}/d'  /etc/group
+sed -i '/^{{var_su_group}}/d'  /etc/group
+
+rm -Rf /home/{{var_user}}
+
+#cleanup of fstab
+
+sed -i '/{{var_root_lvname}}/d' /etc/fstab
+sed -i '/{{var_logs_lvname}}/d' /etc/fstab
+
+#cleanup of sudoers
+rm -f {{var_sudoers_path}}/{{var_user}}
+
+#uninstall java
+
+yum -y autoremove {{var_java_pkg}}
+
+
+#daemon-reload
+
+systemctl daemon-reload
+

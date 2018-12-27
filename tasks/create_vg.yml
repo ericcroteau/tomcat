@@ -1,0 +1,10 @@
+---
+
+    - name: "{{var_pool| upper}}: Create volume group"
+      lvg:
+        vg: "{{var_vg_name}}"
+        pvs: "{{var_pv_name}}"
+        force: yes
+      become: yes
+      become_user: root
+

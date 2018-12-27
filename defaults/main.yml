@@ -1,0 +1,100 @@
+---
+# defaults file for tomcat_install
+
+
+
+    var_role_version: "1.0.4"
+    var_mode: "0750"
+    timezone: 'GMT-5'
+    var_datetime: "{{lookup('pipe','date +%Y-%m-%d')}}"
+    var_shell: "/usr/bin/bash"
+    var_user: "webadm"
+    var_uid: "31003"
+    var_group: "webadm"
+    var_gid: "30003"
+    var_su_group: "su{{var_user}}"
+    var_su_gid: "{{var_gid|int + 1}}"
+    var_expiration_days: 99999
+    var_chage_cmd: "chage -I -1 -m 0 -M {{var_expiration_days}} -E -1"
+    var_users:
+     - { USER: "{{var_user}}", UID: "{{var_uid}}", GROUP: "{{var_group}}", GID: "{{ var_gid }}", SHELL: "{{var_shell}}", COMMENT: "gecos=649/S/*CAAH03/{{var_user}}.WebSphere.Application.User_CD={{var_datetime}}" }
+    var_su_users:
+     - { USER: "{{var_user}}", UID: "{{var_uid}}", GROUP: "{{var_su_group}}", GID: "{{ var_su_gid }}", SHELL: "{{var_shell}}", COMMENT: "gecos=649/S/*CAAH03/{{var_user}}.WebSphere.Application.User_CD={{var_datetime}}" }
+
+     
+    var_pv_name: /dev/sdb
+    var_vg_name: "datavg"
+
+    var_root_lvname: "tomcat_lv"
+    var_root_path: "/opt/apps/tomcat"
+    var_root_size: 10G
+
+    var_logs_lvname: "tomcat_logs_lv"
+    var_logs_path: "{{var_root_path}}/logs"
+    var_logs_size: 20G
+    var_fstype: xfs
+
+    var_filesystems:
+      - { LV: "{{var_root_lvname}}", VG: "{{var_vg_name}}", PATH: "{{var_root_path}}", SIZE: "{{var_root_size}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+      - { LV: "{{var_logs_lvname}}", VG: "{{var_vg_name}}", PATH: "{{var_logs_path}}", SIZE: "{{var_logs_size}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+
+
+    var_web_path: "{{var_root_path}}/web"
+    var_apache_path: "{{var_web_path}}/apache"
+    var_archive_path: "{{var_logs_path}}/archive"
+    var_ws_path: "{{var_logs_path}}/ws" 
+    var_folders:
+      - { PATH: "{{var_root_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+      - { PATH: "{{var_web_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" } 
+      - { PATH: "{{var_apache_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+      - { PATH: "{{var_logs_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+      - { PATH: "{{var_archive_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+      - { PATH: "{{var_ws_path}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}", MODE: "{{var_mode}}" }
+
+
+    var_sudoers_path: "/etc/sudoers.d"
+    var_webadmsudoers_file:
+    - { SRC: "webadmsudoers.j2", DEST: "{{var_sudoers_path}}/{{var_user}}", OWNER: root, GROUP: root, MODE: 440 }
+
+
+
+
+
+    var_tomcat_binary: "{{var_tomcat_binaries}}/{{var_tomcat_zip}}"
+    var_tomcat_files: ""
+    var_tomcat_tarball:
+      - { SRC: "{{var_tomcat_zip}}", DEST: "{{var_apache_path}}", MODE: "{{var_mode}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}"} 
+    var_tomcat_repo:
+      - { SRC: "{{var_tomcat_binary}}", DEST: "{{var_files_path}}", MODE: "{{var_mode}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}"}
+
+    var_tomcat_zip: "apache-tomcat-{{var_tomcat_version}}.zip"
+    var_tomcat_path: "{{var_apache_path}}/apache-tomcat-{{var_tomcat_version}}"
+    var_pool_path: "{{var_tomcat_path}}-{{var_pool}}"
+    var_tomcat_main_version: "{{var_tomcat_version.split('.')[0]}}"
+    var_apache_dist: "https://archive.apache.org/dist"
+    var_tomcat_dist: "{{var_apache_dist}}/tomcat"
+    var_tomcat_version_dist: "{{var_tomcat_dist}}/tomcat-{{var_tomcat_main_version}}"
+    var_tomcat_release_dist: "{{var_tomcat_version_dist}}/v{{var_tomcat_version}}"
+    var_tomcat_bin_dist: "{{var_tomcat_release_dist}}/bin"
+    var_tomcat_src: "{{var_tomcat_bin_dist}}/{{var_tomcat_zip}}"
+
+    var_xmx: "1024M"
+    var_xms: "{{var_xmx}}"
+    var_mapping_address: "{{ansible_default_ipv4.address}}"
+
+    var_poolbin_path: "{{var_pool_path}}/bin"
+    var_poolconf_path: "{{var_pool_path}}/conf"
+    
+    var_setenv:
+      - { SRC: "setenv.sh.j2", DEST: "{{var_poolbin_path}}/setenv.sh", MODE: "{{var_mode}}", OWNER: "{{var_user}}", GROUP: "{{var_group}}"}
+    var_tomcat_service: "tomcat-{{var_pool}}.service"
+    var_service:
+      - { SRC: "tomcat.service.j2", DEST: "/usr/lib/systemd/system/{{var_tomcat_service}}", MODE: "0644", OWNER: root, GROUP: root }
+    var_java_pkg: "java-{{var_java_version}}-openjdk"
+    var_jre_path: "/etc/alternatives/jre_{{var_java_version}}"
+
+    var_webapps_path: "{{var_pool_path}}/webapps"
+    var_defaults_apps:
+      - { PATH: "{{var_webapps_path}}/examples" }
+      - { PATH: "{{var_webapps_path}}/docs" }
+      - { PATH: "{{var_webapps_path}}/host-manager" }

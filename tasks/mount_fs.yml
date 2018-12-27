@@ -1,0 +1,14 @@
+---
+
+
+    - name: "{{var_pool|upper}}: Mount FS"
+      mount:
+        path: "{{item.PATH}}"
+        src: "/dev/{{item.VG}}/{{item.LV}}"
+        fstype: "{{var_fstype}}"
+        state: mounted
+      with_items:
+        - "{{var_filesystems}}"
+      become: yes
+      become_user: root
+

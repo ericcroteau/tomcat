@@ -1,0 +1,28 @@
+---
+# tasks file for tomcat_install
+
+
+
+
+    - import_tasks: send_notification.yml
+    - import_tasks: copy_cleanscript.yml
+    - import_tasks: create_group.yml
+    - import_tasks: create_user.yml
+    - import_tasks: modify_sudoers.yml
+    - import_tasks: create_vg.yml
+    - import_tasks: create_lv.yml
+    - import_tasks: create_fs.yml
+    - import_tasks: mount_fs.yml
+    - import_tasks: create_folders.yml
+    - import_tasks: download_tomcat.yml
+    - import_tasks: create_pool.yml
+    - import_tasks: copy_setenv.yml
+    - import_tasks: map_address.yml
+    - import_tasks: remove_http.yml
+    - import_tasks: modify_logfiles.yml
+    - import_tasks: install_java.yml
+    - import_tasks: create_logssymlink.yml
+    - import_tasks: create_tomcatsymlink.yml
+    - import_tasks: create_javasymlink.yml
+    - import_tasks: remove_defaultapps.yml
+    - import_tasks: create_service.yml

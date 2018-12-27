@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ $USER != "webadm" ]; then
+        echo "Only webadm can start tomcat"
+        exit 1
+fi
+
+#################################
+#                               #
+# custom environment variables  #
+# copyright 2011 BNC            #
+#                               #
+#################################
+export JAVA_HOME={{var_apache_path}}/jre_{{var_java_version}}
+echo "JAVA_HOME=$JAVA_HOME"
+export LANG=en_CA.ISO8859-1
+export POOL_NAME={{var_pool}}
+echo "POOL_NAME=$POOL_NAME"
+export INITIAL_HEAP={{var_xms}}
+echo "INITIAL_HEAP=$INITIAL_HEAP"
+export MAX_HEAP={{var_xmx}}
+echo "MAX_HEAP=$MAX_HEAP"
+export LOG_FILE={{var_pool_path}}/logs/{{var_pool}}-javaro.log
+echo "POOL_NAME=$POOL_NAME"
+export TOMCAT_HOME={{var_pool_path}}
+echo "TOMCAT_HOME=$TOMCAT_HOME"
+export INTERFACE={{ansible_fqdn}}
+echo "INTERFACE=$INTERFACE"
+
+if [ -z "$CATALINA_PID" ]; then
+  export CATALINA_PID=${TOMCAT_HOME}/catalina.pid
+fi
+
+export JAVA_OPTS="-Xms${INITIAL_HEAP} -Xmx${MAX_HEAP} -Dsun.net.inetaddr.ttl=1 -Denv=${ENV} -Djavaro_interface=${INTERFACE}  -Djavaro_log_file=${LOG_FILE}"
+
+#CATALINA_OPTS="-Djava.rmi.server.hostname=${INTERFACE} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+
+CATALINA_OPTS="-Djava.rmi.server.hostname=${INTERFACE}"

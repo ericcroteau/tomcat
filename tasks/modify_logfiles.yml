@@ -1,0 +1,69 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Modify catalina log file"
+      replace:
+        path: "{{var_poolconf_path}}/logging.properties"
+        regexp: 'prefix = catalina\.'
+        replace: 'prefix = {{var_pool}}_catalina\.'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify localhost log file"
+      replace:
+        path: "{{var_poolconf_path}}/logging.properties"
+        regexp: 'prefix = localhost\.'
+        replace: 'prefix = {{var_pool}}_localhost\.'
+      become: yes
+      become_user: "{{var_user}}"
+
+
+    - name: "{{var_pool|upper}}: Modify manager log file"
+      replace:
+        path: "{{var_poolconf_path}}/logging.properties"
+        regexp: 'prefix = manager\.'
+        replace: 'prefix = {{var_pool}}_manager\.'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify host-manager log file"
+      replace:
+        path: "{{var_poolconf_path}}/logging.properties"
+        regexp: 'prefix = host-manager\.'
+        replace: 'prefix = {{var_pool}}_host-manager\.'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify catalina.out log file"
+      replace:
+        path: "{{var_poolbin_path}}/catalina.sh"
+        regexp: '/logs/catalina.out'
+        replace: '/logs/{{var_pool}}_catalina.out'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify catalina-daemon.out log file"
+      replace:
+        path: "{{var_poolbin_path}}/daemon.sh"
+        regexp: '/logs/catalina-daemon.out'
+        replace: '/logs/{{var_pool}}_catalina-daemon.out'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify catalina-daemon.pid log file"
+      replace:
+        path: "{{var_poolbin_path}}/daemon.sh"
+        regexp: '/logs/catalina-daemon.pid'
+        replace: '/{{var_pool}}_catalina-daemon.pid'
+      become: yes
+      become_user: "{{var_user}}"
+
+    - name: "{{var_pool|upper}}: Modify localhost_access log file"
+      replace:
+        path: "{{var_poolconf_path}}/server.xml"
+        regexp: 'prefix="localhost_access_log"'
+        replace: 'prefix="{{var_pool}}_localhost_access_log"'
+      become: yes
+      become_user: "{{var_user}}"
+

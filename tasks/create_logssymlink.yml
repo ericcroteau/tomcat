@@ -1,0 +1,27 @@
+---
+
+#   - name: "{{var_pool|upper}}: validate if symlink already"
+#     stat:
+#       path: "{{var_pool_path}}/logs"
+#     register: logs
+#     become: yes
+#     become_user: root
+
+
+   - name: "{{var_pool|upper}}: Delete Old Logs folder"
+     file:
+       path: "{{var_pool_path}}/logs"
+       state: absent
+     become: yes
+     become_user: root
+
+   - name: "{{var_pool|upper}}: Create Symlink for logs"
+     file:
+       src: "{{var_ws_path}}" 
+       path: "{{var_pool_path}}/logs"
+       state: link
+       owner: "{{var_user}}"  
+       group: "{{var_group}}"
+     become: yes
+     become_user: root
+#     when: logs.stat.exists == false

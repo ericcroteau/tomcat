@@ -1,0 +1,88 @@
+---
+
+#################
+# Create users
+#################
+
+    - name: "{{var_pool|upper}}: Create user"
+      user:
+        name: "{{item.USER}}"
+        uid: "{{item.UID}}"
+        group: "{{item.GROUP}}"
+        home: "/home/{{item.USER}}"
+        shell: "{{item.SHELL}}"
+        comment: "{{item.COMMENT}}"
+        generate_ssh_key: yes
+      with_items:
+         - "{{ var_users }}"
+      become: yes
+      become_user: root
+
+    - name: "{{var_pool|upper}}: Change umask in .bash_profile"
+      replace: 
+        dest: "/home/{{item.USER}}/.bash_profile"
+        regexp: '^umask 022'
+        replace: 'umask 027'
+        owner: "{{item.USER}}"
+        group: "{{item.GROUP}}"
+        backup: yes
+      become: yes
+      become_user: "{{item.USER}}"
+      with_items:
+        - "{{var_users}}"
+
+    - name: "{{var_pool|upper}}: Change password expiration (on RedHat)"
+      command: "{{var_chage_cmd}} {{item.USER}}"
+      become: yes
+      become_user: root
+      with_items:
+        - "{{var_users}}"
+      when: ansible_os_family == "RedHat"
+
+    - name: "{{var_pool|upper}}: Create cron.allow (on Redhat)"
+      file:
+        path: "/etc/cron.allow"
+        owner: root
+        state: touch
+      become: yes
+      become_user: root
+      when: ansible_os_family == "RedHat"
+
+
+
+    - name: "{{var_pool|upper}}: Enable cron for user (on RedHat)"
+      lineinfile:
+        dest: "/etc/cron.allow"
+        line: "{{item.USER}}"
+        owner: root
+        state: present
+      with_items:
+        - "{{var_users}}"
+      become: yes
+      become_user: root
+      when: ansible_os_family == "RedHat"
+
+
+    - name: "{{var_pool|upper}}: Create cron.allow (on AIX)"
+      file:
+        path: "/var/adm/cron/cron.allow"
+        owner: root
+        state: touch
+      become: yes
+      become_user: root
+      when: ansible_os_family == "AIX"
+
+
+
+    - name: "{{var_pool|upper}}: Enable cron for user (on AIX)"
+      lineinfile:
+        dest: "/var/adm/cron/cron.allow"
+        line: "{{item.USER}}"
+        owner: root
+        state: present
+      with_items:
+        - "{{var_users}}"
+      become: yes
+      become_user: root
+      when: ansible_os_family == "AIX"
+

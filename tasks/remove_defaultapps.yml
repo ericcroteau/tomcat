@@ -1,0 +1,12 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Remove Default Apps"
+      file:
+        path: "{{item.PATH}}" 
+        state: absent
+      become: yes
+      become_user: "{{var_user}}"
+      with_items:
+        - "{{var_defaults_apps}}"

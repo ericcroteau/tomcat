@@ -1,0 +1,14 @@
+---
+
+
+
+
+   - name: "{{var_pool|upper}}: Create Symlink for Java"
+     file:
+       src: "{{var_jre_path}}" 
+       path: "{{var_apache_path}}/jre_{{var_java_version}}"
+       state: link
+       owner: "{{var_user}}"  
+       group: "{{var_group}}"
+     become: yes
+     become_user: root

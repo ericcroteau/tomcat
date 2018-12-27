@@ -1,0 +1,23 @@
+---
+- hosts: axdapszwas01
+#  remote_user: root
+  roles:
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p0, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p1, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p2, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p3, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p4, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p5, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p6, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p7, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p10, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p11, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p12, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: p13, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: ws1, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: ws2, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: api1, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: api10, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: odc, var_tomcat_version: "9.0.8"}
+#    - { role: /opt/ansible/websupp/ROLES/TOMCAT_sz_upgrade, var_pool: eric, var_tomcat_version: "9.0.10"}
+

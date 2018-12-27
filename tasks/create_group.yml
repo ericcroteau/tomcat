@@ -1,0 +1,24 @@
+---
+
+###############
+# Create groups
+###############
+
+    - name: "{{var_pool|upper}}: Create group"
+      group:
+        name: "{{item.GROUP}}"
+        gid: "{{item.GID}}"
+      with_items:
+        - "{{var_users}}"
+      become: yes
+      become_user: root
+
+    - name: "{{var_pool|upper}}: Create SU group"
+      group:
+        name: "{{item.GROUP}}"
+        gid: "{{item.GID}}"
+      with_items:
+        - "{{var_su_users}}"
+      become: yes
+      become_user: root
+

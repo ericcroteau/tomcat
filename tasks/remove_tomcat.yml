@@ -1,0 +1,10 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Remove tomcat from management server"
+      file:
+        path: "{{var_files_path}}/{{var_tomcat_zip}}"
+        state: absent
+      delegate_to: localhost
+

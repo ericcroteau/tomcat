@@ -1,0 +1,14 @@
+---
+
+    - name: "{{var_pool|upper}}: Copy sudoers files"
+      template:
+        src: "{{ item.SRC }}"
+        dest: "{{ item.DEST }}"
+        owner: "{{ item.OWNER }}"
+        group: "{{ item.GROUP }}"
+        mode: "{{ item.MODE }}"
+      become: yes
+      become_user: root
+      with_items:
+        - "{{var_webadmsudoers_file}}"
+

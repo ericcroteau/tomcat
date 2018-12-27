@@ -1,0 +1,27 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Mapping address to Server"
+      xml:
+        path: "{{var_poolconf_path}}/server.xml"
+        xpath: /Server
+        attribute: address
+        value: "{{var_mapping_address}}"
+        pretty_print: yes
+        state: present
+      become: yes
+      become_user: "{{var_user}}"
+
+
+    - name: "{{var_pool|upper}}: Mapping address to Connectors"
+      xml:
+        path: "{{var_poolconf_path}}/server.xml"
+        xpath: /Server/Service/Connector
+        attribute: address
+        value: "{{var_mapping_address}}"
+        pretty_print: yes
+        state: present
+      become: yes
+      become_user: "{{var_user}}"
+

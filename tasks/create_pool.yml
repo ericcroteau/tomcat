@@ -1,0 +1,19 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Create pool"
+      command: "mv {{var_tomcat_path}} {{var_pool_path}}" 
+      become: yes
+      become_user: root
+      when: pool.stat.exists == false
+
+    - name: "{{var_pool|upper}}: Change Ownership"
+      file:
+        path: "{{var_pool_path}}"
+        owner: "{{var_user}}"
+        group: "{{var_group}}"
+        mode: "{{var_mode}}"
+        recurse: yes
+      become: yes
+      become_user: root

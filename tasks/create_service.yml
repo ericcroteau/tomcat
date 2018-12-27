@@ -1,0 +1,33 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Propagate Unit file"
+      template:
+        src: "{{item.SRC}}"
+        dest: "{{item.DEST}}"
+        mode: "{{item.MODE}}"
+        owner: "{{item.OWNER}}"
+        group: "{{item.GROUP}}"
+      become: yes
+      become_user: root
+      with_items:
+        - "{{var_service}}"
+      when: ansible_distribution == "RedHat"
+
+    - name: "{{var_pool|upper}}: Reload Daemon"
+      command: systemctl daemon-reload
+      become: yes
+      become_user: root
+
+    - name: "{{var_pool|upper}}: Start Tomcat through services"
+      service:
+        name: "{{var_tomcat_service}}"
+        state: restarted
+        enabled: yes
+      become: yes
+      become_user: root
+      when: ansible_distribution == "RedHat"
+
+
+

@@ -1,0 +1,37 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: validate folder already exists"
+      stat:
+        path: "{{var_tomcat_path}}"
+      become: yes
+      become_user: root
+      register: tomcat_binary
+
+    - name: "{{var_pool|upper}}: Verify if pool already there"
+      stat:
+        path: "{{var_pool_path}}"
+      become: yes
+      become_user: root
+      register: pool
+
+
+
+    - name: "{{var_pool|upper}}: copy tomcat and unzip"
+      unarchive:
+        src: "{{var_tomcat_src}}"
+        dest: "{{var_apache_path}}"
+        mode: "{{item.MODE}}"
+        owner: "{{item.OWNER}}"
+        group: "{{item.GROUP}}"
+        remote_src: yes
+      become: yes
+      become_user: root
+      with_items:
+        - "{{var_tomcat_tarball}}"
+      when:
+        - tomcat_binary.stat.exists == false
+        - pool.stat.exists == false
+
+

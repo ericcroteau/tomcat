@@ -1,0 +1,22 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: create symlink for tomcat-{{var_pool}}"
+      file:
+        dest: "{{var_apache_path}}/tomcat-{{var_pool}}" 
+        src: "apache-tomcat-{{var_tomcat_version}}-{{var_pool}}"
+        state: link
+        owner: "{{var_user}}"
+        group: "{{var_group}}"
+      become: yes
+      become_user: root 
+
+#    - name: "{{var_pool|upper}}: change ownership on tomcat symlink"
+#      file:
+#        path: "{{var_apache_path}}/tomcat-{{var_pool}}" 
+#        owner: "{{var_user}}"
+#        group: "{{var_group}}"
+#      become: yes
+#      become_user: root
+

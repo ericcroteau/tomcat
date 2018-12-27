@@ -1,0 +1,12 @@
+---
+
+
+    - name: "{{var_pool|upper}}: Create filesystems"
+      filesystem:
+        dev: "/dev/{{item.VG}}/{{item.LV}}"
+        fstype: "{{var_fstype}}"
+      with_items:
+        - "{{var_filesystems}}"
+      become: yes
+      become_user: root
+

@@ -1,0 +1,13 @@
+---
+
+
+
+    - name: "{{var_pool|upper}}: Remove HTTP Connector"
+      xml:
+        path: "{{var_poolconf_path}}/server.xml"
+        xpath: /Server/Service/Connector[@protocol="HTTP/1.1"]
+        pretty_print: yes
+        state: absent
+      become: yes
+      become_user: "{{var_user}}"
+

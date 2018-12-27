@@ -1,0 +1,14 @@
+---
+
+
+    - name: "{{var_pool|upper}}: Create logical volumes"
+      lvol:
+        vg: "{{item.VG}}"
+        lv: "{{item.LV}}"
+        size: "{{item.SIZE}}"
+        force: yes
+      with_items:
+        - "{{var_filesystems}}"
+      become: yes
+      become_user: root
+
