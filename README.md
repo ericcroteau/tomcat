@@ -61,5 +61,4 @@ Author Information
 ------------------
 
 Eric Croteau
-ericc.croteau@bnc.ca
-438.869.3403
+eric_croteau79@hotmail.com
