@@ -27,7 +27,6 @@
         group: "{{item.GROUP}}"
         backup: yes
       become: yes
-      become_user: "{{item.USER}}"
       with_items:
         - "{{var_users}}"
 
