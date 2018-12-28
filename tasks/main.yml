@@ -2,14 +2,10 @@
 # tasks file for tomcat_install
 
 
-
-
-    - import_tasks: send_notification.yml
     - import_tasks: copy_cleanscript.yml
     - import_tasks: create_group.yml
     - import_tasks: create_user.yml
     - import_tasks: modify_sudoers.yml
-    - import_tasks: create_vg.yml
     - import_tasks: create_lv.yml
     - import_tasks: create_fs.yml
     - import_tasks: mount_fs.yml
