@@ -13,7 +13,7 @@
     - import_tasks: download_tomcat.yml
     - import_tasks: create_pool.yml
     - import_tasks: copy_setenv.yml
-    - import_tasks: map_address.yml
+#    - import_tasks: map_address.yml
     - import_tasks: remove_http.yml
     - import_tasks: modify_logfiles.yml
     - import_tasks: install_java.yml
