@@ -6,9 +6,9 @@
     - import_tasks: create_group.yml
     - import_tasks: create_user.yml
     - import_tasks: modify_sudoers.yml
-    - import_tasks: create_lv.yml
-    - import_tasks: create_fs.yml
-    - import_tasks: mount_fs.yml
+#    - import_tasks: create_lv.yml
+#    - import_tasks: create_fs.yml
+#    - import_tasks: mount_fs.yml
     - import_tasks: create_folders.yml
     - import_tasks: download_tomcat.yml
     - import_tasks: create_pool.yml
