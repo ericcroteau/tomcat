@@ -4,10 +4,8 @@
 
     - name: "{{var_pool|upper}}: Install Java"
       yum:
-        name: "{{item}}"
+        name: "{{var_java_pkg}}"
 #        installroot: "{{var_apache_path}}"
         state: latest
       become: yes
       become_user: root
-      with_items:
-        - "{{var_java_pkg}}"
